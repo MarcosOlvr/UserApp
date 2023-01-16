@@ -13,20 +13,15 @@ namespace UserApi.Repository
             _db = db;
         }
 
-        public bool CreateUser(string name, string email, string password)
+        public User CreateUser(User model)
         {
             try
             {
-                _db.Users.Add(new User
-                {
-                    Name = name,
-                    Email = email,
-                    Password = password
-                });
+                _db.Users.Add(model);
 
                 _db.SaveChanges();
 
-                return true;
+                return model;
             }
             catch(Exception ex) {
                 throw new Exception(ex.Message);
@@ -62,14 +57,14 @@ namespace UserApi.Repository
             }
         }
 
-        public User UpdateUser(int id, string name, string email, string password)
+        public User UpdateUser(int id, User model)
         {
             try
             {
                 User user = GetUser(id);
-                user.Name = name;
-                user.Email = email;
-                user.Password = password;
+                user.Name = model.Name;
+                user.Email = model.Email;
+                user.Password = model.Password;
                 
                 _db.Users.Update(user);
                 _db.SaveChanges();
