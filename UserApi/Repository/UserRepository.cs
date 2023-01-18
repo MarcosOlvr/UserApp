@@ -17,6 +17,9 @@ namespace UserApi.Repository
         {
             try
             {
+                if (model == null)
+                    throw new ArgumentNullException("model");
+
                 _db.Users.Add(model);
 
                 _db.SaveChanges();
@@ -49,6 +52,9 @@ namespace UserApi.Repository
             {
                 User user = _db.Users.Find(id);
 
+                if (user == null)
+                    throw new Exception();
+
                 return user;
             }
             catch(Exception ex)
@@ -62,6 +68,7 @@ namespace UserApi.Repository
             try
             {
                 User user = GetUser(id);
+
                 user.Name = model.Name;
                 user.Email = model.Email;
                 user.Password = model.Password;
